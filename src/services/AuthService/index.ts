@@ -10,10 +10,10 @@ import { FieldValues } from "react-hook-form";
 export const loginUser = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post("/auth/login", userData);
-
+    console.log(data);
     if (data?.success) {
-      (await cookies()).set("accessToken", data?.data?.accessToken, {
-        maxAge: 604800,
+      (await cookies()).set("accessToken", data?.token, {
+        maxAge: 2592000,
         secure: true,
         sameSite: "none",
       });
@@ -32,7 +32,7 @@ export const loginUser = async (userData: FieldValues) => {
 export const forgetPassword = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post(
-      "/auth/forgot-password",
+      "/auth/forget-password",
       userData
     );
     // if (data?.success) {
@@ -110,7 +110,8 @@ export const getCurrentUser = async () => {
   if (accessToken) {
     decodedToken = await jwtDecode(accessToken);
     return {
-      id: decodedToken?.id,
+      _id: decodedToken?._id,
+      name: decodedToken?.name,
       email: decodedToken?.email,
       role: decodedToken?.role,
     };

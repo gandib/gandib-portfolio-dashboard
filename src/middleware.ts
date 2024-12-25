@@ -4,11 +4,11 @@ import { getCurrentUser } from "./services/AuthService";
 
 const AuthRoutes = ["/login"];
 
-type TRole = keyof typeof roleBaseRoutes;
+// type TRole = keyof typeof roleBaseRoutes;
 
-const roleBaseRoutes = {
-  ADMIN: [/^\/dashboard/],
-};
+// const roleBaseRoutes = {
+//   ADMIN: [/^\/dashboard/],
+// };
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
@@ -26,15 +26,15 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  if (user?.role && roleBaseRoutes[user?.role as TRole]) {
-    const routes = roleBaseRoutes[user?.role as TRole];
+  // if (user?.role && roleBaseRoutes[user?.role as TRole]) {
+  //   const routes = roleBaseRoutes[user?.role as TRole];
 
-    if (routes.some((route) => pathname.match(route))) {
-      return NextResponse.next();
-    }
-  }
+  //   if (routes.some((route) => pathname.match(route))) {
+  //     return NextResponse.next();
+  //   }
+  // }
 
-  return NextResponse.redirect(new URL("/", request.url));
+  // return NextResponse.redirect(new URL("/", request.url));
 }
 
 // See "Matching Paths" below to learn more
