@@ -41,33 +41,46 @@ export const useUpdateBlog = () => {
 };
 
 export const useDeleteBlog = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation<any, Error, string>({
+  return useMutation<any, Error, any>({
+    mutationKey: ["Blog"],
     mutationFn: async (blogData) => await deleteBlog(blogData),
-
-    onSuccess(data, blogId, context) {
+    onSuccess(data, variables, context) {
       toast.success(data.message);
-
-      // Update cache for the user's recipes directly
-      queryClient.setQueryData(["Blog"], (oldData: any) => {
-        if (!oldData) return;
-
-        // Filter out the deleted recipe by ID
-        const updatedBlogs = oldData.result.filter(
-          (recipe: any) => recipe._id !== blogId
-        );
-
-        // Return updated data
-        return {
-          ...oldData,
-          result: updatedBlogs, // Update the result array
-        };
-      });
     },
-
-    onError(error, blogId, context) {
+    onError(error, variables, context) {
       toast.error(error.message);
     },
   });
 };
+
+// export const useDeleteBlog = () => {
+//   const queryClient = useQueryClient();
+
+//   return useMutation<any, Error, string>({
+//     mutationFn: async (blogData) => await deleteBlog(blogData),
+
+//     onSuccess(data, blogId, context) {
+//       toast.success(data.message);
+
+//       // Update cache for the user's recipes directly
+//       queryClient.setQueryData(["Blog"], (oldData: any) => {
+//         if (!oldData) return;
+
+//         // Filter out the deleted recipe by ID
+//         const updatedBlogs = oldData.result.filter(
+//           (recipe: any) => recipe._id !== blogId
+//         );
+
+//         // Return updated data
+//         return {
+//           ...oldData,
+//           result: updatedBlogs, // Update the result array
+//         };
+//       });
+//     },
+
+//     onError(error, blogId, context) {
+//       toast.error(error.message);
+//     },
+//   });
+// };

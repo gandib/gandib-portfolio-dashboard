@@ -1,7 +1,12 @@
-const Blogs = () => {
+import BlogDisplayCard from "@/src/components/UI/Blog/BlogDisplayCard";
+import { getAllBlogs } from "@/src/services/BlogService";
+
+const Blogs = async () => {
+  const { data: allBlogs } = await getAllBlogs([{ name: "limit", value: 10 }]);
+
   return (
     <div>
-      <h1>Hello, Blogs!</h1>
+      <BlogDisplayCard blogs={allBlogs} />
     </div>
   );
 };

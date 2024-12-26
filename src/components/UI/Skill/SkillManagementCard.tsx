@@ -24,6 +24,7 @@ const SkillManageCard = ({
   const { mutate: handleCreateSkill, isPending, isSuccess } = useCreateSkill();
   const router = useRouter();
   const [name, setName] = useState(skill?.name || "");
+  const [errorMessage, setErrorMessage] = useState("");
   const { mutate: handleUpdateSkill, isSuccess: skillUpdateSuccess } =
     useUpdateSkill();
 
@@ -47,6 +48,10 @@ const SkillManageCard = ({
     }
 
     formData.append("data", JSON.stringify(skillData));
+    console.log(imageFiles[0]);
+    if (imageFiles[0] === undefined) {
+      return setErrorMessage("Please select a logo!");
+    }
 
     formData.append("file", imageFiles[0]);
 
@@ -57,7 +62,7 @@ const SkillManageCard = ({
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
-
+    setErrorMessage("");
     setImageFiles([file]);
 
     if (file) {
@@ -119,6 +124,9 @@ const SkillManageCard = ({
                   onChange={(e) => handleImageChange(e)}
                 />
               </div>
+            )}
+            {errorMessage && (
+              <p className="text-red-500 text-base">{errorMessage}</p>
             )}
             {imagePreviews.length > 0 && (
               <div className="flex flex-wrap gap-5 my-5">
