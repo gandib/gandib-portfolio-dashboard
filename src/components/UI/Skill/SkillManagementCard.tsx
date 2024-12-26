@@ -125,7 +125,7 @@ const SkillManageCard = ({
                 />
               </div>
             )}
-            {errorMessage && (
+            {errorMessage && cardTitle === "Add" && (
               <p className="text-red-500 text-base">{errorMessage}</p>
             )}
             {imagePreviews.length > 0 && (

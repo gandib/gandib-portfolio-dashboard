@@ -11,9 +11,9 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Button } from "@nextui-org/react";
 import { IBlog, queryParams } from "@/src/types";
-import { getAllBlogs } from "@/src/services/BlogService";
+import { getAllProjects } from "@/src/services/ProjectService";
 import { useRouter } from "next/navigation";
-import { useDeleteBlog } from "@/src/hooks/blog.hook";
+import { useDeleteProject } from "@/src/hooks/project.hook";
 
 export interface IMeta {
   page: number;
@@ -22,17 +22,17 @@ export interface IMeta {
   totalPage: number;
 }
 
-const BlogDisplayCard = ({
-  blogs,
+const ProjectDisplayCard = ({
+  projects,
 }: {
-  blogs: { meta: IMeta; result: IBlog[] };
+  projects: { meta: IMeta; result: IBlog[] };
 }) => {
-  const [blogData, setBlogData] = useState(blogs);
-  const [currentPage, setCurrentPage] = useState(blogData?.meta?.page);
+  const [projectData, setProjectData] = useState(projects);
+  const [currentPage, setCurrentPage] = useState(projectData?.meta?.page);
   const [limit, setLimit] = useState(10);
-  const [totalPage, setTotalPage] = useState(blogData?.meta?.totalPage);
+  const [totalPage, setTotalPage] = useState(projectData?.meta?.totalPage);
   const router = useRouter();
-  const { mutate: deleteBlog, isSuccess } = useDeleteBlog();
+  const { mutate: deleteProject, isSuccess } = useDeleteProject();
 
   useEffect(() => {
     const query: queryParams[] = [];
@@ -44,9 +44,9 @@ const BlogDisplayCard = ({
     }
 
     const fetchData = async () => {
-      const { data: allBlogs } = await getAllBlogs(query);
-      setBlogData(allBlogs);
-      setTotalPage(blogData?.meta?.totalPage);
+      const { data: allProjects } = await getAllProjects(query);
+      setProjectData(allProjects);
+      setTotalPage(projectData?.meta?.totalPage);
     };
 
     if (query.length > 0) {
@@ -55,15 +55,15 @@ const BlogDisplayCard = ({
   }, [currentPage, totalPage, isSuccess]);
 
   const handleDelete = (id: string) => {
-    deleteBlog(id);
+    deleteProject(id);
   };
 
   return (
     <div>
       <div className="grid lg:grid-cols-2 gap-2 grow relative">
-        {blogData &&
-          blogData?.result?.length > 0 &&
-          blogData?.result?.map((data: IBlog) => (
+        {projectData &&
+          projectData?.result?.length > 0 &&
+          projectData?.result?.map((data: IBlog) => (
             <NextUiCard
               key={data._id}
               isFooterBlurred
@@ -90,14 +90,10 @@ const BlogDisplayCard = ({
                   </h4>
                 </div>
                 <div className="my-1 rounded  p-1 lg:text-lg font-medium flex ">
-                  <div
-                    className="instructions"
-                    dangerouslySetInnerHTML={{
-                      __html:
-                        data.description.slice(0, 150) +
-                        `${data.description.length > 150 ? "..." : ""}`,
-                    }}
-                  />
+                  <h1>
+                    {data.description.slice(0, 150) +
+                      `${data.description.length > 150 ? "..." : ""}`}
+                  </h1>
                 </div>
               </CardBody>
 
@@ -105,7 +101,7 @@ const BlogDisplayCard = ({
                 <>
                   <Button
                     onPress={() =>
-                      router.push(`/dashboard/blogs/update/${data._id}`)
+                      router.push(`/dashboard/projects/update/${data._id}`)
                     }
                   >
                     Update{" "}
@@ -115,7 +111,7 @@ const BlogDisplayCard = ({
                   </Button>
                   <Button
                     onPress={() =>
-                      router.push(`/dashboard/blogs/details/${data._id}`)
+                      router.push(`/dashboard/projects/details/${data._id}`)
                     }
                   >
                     See Detail{" "}
@@ -125,7 +121,7 @@ const BlogDisplayCard = ({
             </NextUiCard>
           ))}
       </div>
-      {blogData?.result?.length > 0 ? (
+      {projectData?.result?.length > 0 ? (
         <Pagination
           total={totalPage}
           page={currentPage}
@@ -134,10 +130,10 @@ const BlogDisplayCard = ({
           className="flex justify-center my-2"
         />
       ) : (
-        "No blogs to show!"
+        "No projects to show!"
       )}
     </div>
   );
 };
 
-export default BlogDisplayCard;
+export default ProjectDisplayCard;

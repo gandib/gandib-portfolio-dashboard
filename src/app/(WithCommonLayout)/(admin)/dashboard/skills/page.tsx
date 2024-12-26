@@ -1,7 +1,12 @@
-const Skills = () => {
+import SkillDisplayCard from "@/src/components/UI/Skill/SkillDisplayCard";
+import { getAllSkills } from "@/src/services/SkillService";
+
+const Skills = async () => {
+  const { data: allSkills } = await getAllSkills([]);
+  console.log(allSkills);
   return (
     <div>
-      <h1>Hello, Skills!</h1>
+      <SkillDisplayCard skill={allSkills} />
     </div>
   );
 };
