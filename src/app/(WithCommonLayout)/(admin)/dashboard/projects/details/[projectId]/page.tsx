@@ -1,8 +1,11 @@
 import ProjectDetailCard from "@/src/components/UI/Project/ProjectDetailCard";
 import { getSingleProject } from "@/src/services/ProjectService";
 
-const ProjectDetail = async ({ params }: { params: { projectId: string } }) => {
-  const { data: project } = await getSingleProject(params?.projectId);
+type Params = Promise<{ projectId: string }>;
+
+const ProjectDetail = async (params: { params: Params }) => {
+  const projectId = (await params.params).projectId;
+  const { data: project } = await getSingleProject(projectId);
   return (
     <div>
       <ProjectDetailCard project={project} />

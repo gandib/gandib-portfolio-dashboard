@@ -88,7 +88,7 @@ const ProjectManageCard = ({
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        setImagePreviews([reader.result as string]);
+        setImagePreviews([reader?.result as string]);
       };
 
       reader.readAsDataURL(file);

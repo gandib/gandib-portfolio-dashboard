@@ -58,7 +58,7 @@ export const useDeleteProject = () => {
         if (!oldData) return;
 
         // Filter out the deleted recipe by ID
-        const updatedProjects = oldData.result.filter(
+        const updatedProjects = oldData?.result.filter(
           (recipe: any) => recipe._id !== projectId
         );
 

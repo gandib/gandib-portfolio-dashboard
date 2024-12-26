@@ -44,9 +44,16 @@ const BlogDisplayCard = ({
     }
 
     const fetchData = async () => {
-      const { data: allBlogs } = await getAllBlogs(query);
-      setBlogData(allBlogs);
-      setTotalPage(blogData?.meta?.totalPage);
+      try {
+        const { data: allBlogs } = await getAllBlogs([
+          ...query,
+          { name: "sort", value: "-createdAt" },
+        ]);
+        setBlogData(allBlogs);
+        setTotalPage(blogData?.meta?.totalPage);
+      } catch (error) {
+        console.error("Failed to fetch related products:", error);
+      }
     };
 
     if (query.length > 0) {

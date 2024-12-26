@@ -5,6 +5,7 @@ import { getAllProjects } from "@/src/services/ProjectService";
 const Projects = async () => {
   const { data: allProjects } = await getAllProjects([
     { name: "limit", value: 10 },
+    { name: "sort", value: "-createdAt" },
   ]);
   return (
     <div>

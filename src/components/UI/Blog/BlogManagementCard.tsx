@@ -68,8 +68,6 @@ const BlogManageCard = ({
   };
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
-
     const imageSources = extractImages(value);
     const instructionsWithoutImages = removeImagesFromContent(value);
     setInstructions(instructionsWithoutImages);
@@ -79,7 +77,7 @@ const BlogManageCard = ({
       if (src.startsWith("data:image")) {
         // If image is in base64 format, convert it to File
         const file = base64ToFile(src, `image${index}.png`);
-        console.log({ file });
+
         formData.append("file", file);
       }
     });
@@ -89,11 +87,9 @@ const BlogManageCard = ({
     }
     const blogData = {
       ...data,
-      image: " ",
+      image: "",
       description: instructionsWithoutImages,
     };
-
-    console.log({ blogData });
 
     formData.append("data", JSON.stringify(blogData));
 

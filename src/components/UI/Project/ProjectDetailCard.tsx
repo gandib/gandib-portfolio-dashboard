@@ -13,7 +13,6 @@ export interface IMeta {
 }
 
 const ProjectDetailCard = ({ project }: { project: IProject }) => {
-  console.log(project);
   return (
     <div>
       {project ? (
@@ -43,6 +42,7 @@ const ProjectDetailCard = ({ project }: { project: IProject }) => {
                   Client Live Link:{" "}
                   <Link
                     href={project?.clientLiveLink}
+                    target="_blank"
                     className="text-green-500"
                   >
                     {project?.clientLiveLink}
@@ -54,6 +54,7 @@ const ProjectDetailCard = ({ project }: { project: IProject }) => {
                   Server Live Link:{" "}
                   <Link
                     href={project?.serverLiveLink}
+                    target="_blank"
                     className="text-green-500"
                   >
                     {project?.serverLiveLink}
@@ -65,6 +66,7 @@ const ProjectDetailCard = ({ project }: { project: IProject }) => {
                   Git Client Live Link:{" "}
                   <Link
                     href={project?.gitClientLink}
+                    target="_blank"
                     className="text-green-500"
                   >
                     {project?.gitClientLink}
@@ -76,6 +78,7 @@ const ProjectDetailCard = ({ project }: { project: IProject }) => {
                   Git Server Live Link:{" "}
                   <Link
                     href={project?.gitServerLink}
+                    target="_blank"
                     className="text-green-500"
                   >
                     {project?.gitServerLink}

@@ -44,8 +44,10 @@ export const getAllSkills = async (query: queryParams[]) => {
 
     const data = await res.json();
 
+    console.log(data);
+
     // Ensure data structure is correct
-    if (!data || !data.data.result) {
+    if (!data || !data?.data?.result) {
       throw new Error("Invalid data format");
     }
 

@@ -29,8 +29,12 @@ const SkillDisplayCard = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data: allSkill } = await getAllSkills([]);
-      setSkillData(allSkill);
+      try {
+        const { data: allSkill } = await getAllSkills([]);
+        setSkillData(allSkill);
+      } catch (error) {
+        console.error("Failed to fetch related products:", error);
+      }
     };
 
     fetchData();

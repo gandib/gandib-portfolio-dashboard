@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Button } from "@nextui-org/react";
-import { IBlog, queryParams } from "@/src/types";
+import { IProject, queryParams } from "@/src/types";
 import { getAllProjects } from "@/src/services/ProjectService";
 import { useRouter } from "next/navigation";
 import { useDeleteProject } from "@/src/hooks/project.hook";
@@ -25,7 +25,7 @@ export interface IMeta {
 const ProjectDisplayCard = ({
   projects,
 }: {
-  projects: { meta: IMeta; result: IBlog[] };
+  projects: { meta: IMeta; result: IProject[] };
 }) => {
   const [projectData, setProjectData] = useState(projects);
   const [currentPage, setCurrentPage] = useState(projectData?.meta?.page);
@@ -44,9 +44,16 @@ const ProjectDisplayCard = ({
     }
 
     const fetchData = async () => {
-      const { data: allProjects } = await getAllProjects(query);
-      setProjectData(allProjects);
-      setTotalPage(projectData?.meta?.totalPage);
+      try {
+        const { data: allProjects } = await getAllProjects([
+          ...query,
+          { name: "sort", value: "-createdAt" },
+        ]);
+        setProjectData(allProjects);
+        setTotalPage(projectData?.meta?.totalPage);
+      } catch (error) {
+        console.error("Failed to fetch related products:", error);
+      }
     };
 
     if (query.length > 0) {
@@ -63,7 +70,7 @@ const ProjectDisplayCard = ({
       <div className="grid lg:grid-cols-2 gap-2 grow relative">
         {projectData &&
           projectData?.result?.length > 0 &&
-          projectData?.result?.map((data: IBlog) => (
+          projectData?.result?.map((data: IProject) => (
             <NextUiCard
               key={data._id}
               isFooterBlurred

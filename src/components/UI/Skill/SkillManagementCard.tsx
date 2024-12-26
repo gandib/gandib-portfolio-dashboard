@@ -48,7 +48,7 @@ const SkillManageCard = ({
     }
 
     formData.append("data", JSON.stringify(skillData));
-    console.log(imageFiles[0]);
+
     if (imageFiles[0] === undefined) {
       return setErrorMessage("Please select a logo!");
     }
@@ -69,7 +69,7 @@ const SkillManageCard = ({
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        setImagePreviews([reader.result as string]);
+        setImagePreviews([reader?.result as string]);
       };
 
       reader.readAsDataURL(file);

@@ -27,7 +27,7 @@ const CustomRichTextEditor = ({
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      const imageUrl = reader.result as string;
+      const imageUrl = reader?.result as string;
       const imageTag = `<img src="${imageUrl}" alt="${file.name}" style="max-width: 100%; height: auto;" />`;
       setContent((prevContent) => prevContent + imageTag); // Update content with the new image tag
       setIsEmpty(false);
@@ -122,19 +122,19 @@ const CustomRichTextEditor = ({
       {/* Toolbar */}
       <div className="mb-4 flex gap-2">
         <button
-          className="px-2 py-1 border rounded bg-gray-200 hover:bg-gray-300"
+          className="px-2 py-1 border rounded text-black bg-gray-200 hover:bg-gray-300"
           onClick={(e) => toggleFormat("bold", e)} // pass event to prevent default
         >
           Bold
         </button>
         <button
-          className="px-2 py-1 border rounded bg-gray-200 hover:bg-gray-300"
+          className="px-2 py-1 border rounded text-black bg-gray-200 hover:bg-gray-300"
           onClick={(e) => toggleFormat("italic", e)} // pass event to prevent default
         >
           Italic
         </button>
         <button
-          className="px-2 py-1 border rounded bg-gray-200 hover:bg-gray-300"
+          className="px-2 py-1 border rounded text-black bg-gray-200 hover:bg-gray-300"
           onClick={(e) => toggleFormat("underline", e)} // pass event to prevent default
         >
           Underline
@@ -142,7 +142,7 @@ const CustomRichTextEditor = ({
 
         {/* Image Insert Button */}
         <button
-          className="px-2 py-1 border rounded bg-gray-200 hover:bg-gray-300"
+          className="px-2 py-1 border text-black rounded bg-gray-200 hover:bg-gray-300"
           onClick={() => fileInputRef.current?.click()}
         >
           Insert Image
@@ -159,7 +159,7 @@ const CustomRichTextEditor = ({
       {/* Editable Content Area */}
       <div
         ref={editorRef}
-        className="border p-4 min-h-[150px] rounded-md bg-white shadow-sm focus:outline-none w-full"
+        className="border p-4 min-h-[150px] rounded-md bg-white text-black shadow-sm focus:outline-none w-full"
         contentEditable={true}
         dir="ltr" // Ensure text is written left to right
         onInput={handleTyping} // Handle content input

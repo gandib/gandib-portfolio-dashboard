@@ -10,7 +10,7 @@ import { FieldValues } from "react-hook-form";
 export const loginUser = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post("/auth/login", userData);
-    console.log(data);
+
     if (data?.success) {
       (await cookies()).set("accessToken", data?.token, {
         maxAge: 2592000,

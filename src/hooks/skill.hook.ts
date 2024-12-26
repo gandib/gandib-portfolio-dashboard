@@ -56,7 +56,7 @@ export const useDeleteSkill = () => {
         if (!oldData) return;
 
         // Filter out the deleted recipe by ID
-        const updatedSkills = oldData.result.filter(
+        const updatedSkills = oldData?.result.filter(
           (recipe: any) => recipe._id !== skillId
         );
 

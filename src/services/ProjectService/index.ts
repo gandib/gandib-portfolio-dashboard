@@ -48,7 +48,7 @@ export const getAllProjects = async (query: queryParams[]) => {
     const data = await res.json();
 
     // Ensure data structure is correct
-    if (!data || !data.data.result) {
+    if (!data || !data?.data?.result) {
       throw new Error("Invalid data format");
     }
 
