@@ -75,6 +75,7 @@ export const getSingleBlog = async (blogId: string) => {
 };
 
 export const updateBlog = async (blogData: FieldValues) => {
+  console.log(blogData.data);
   try {
     const { data } = await axiosInstance.patch(
       `/blog/${blogData.id}`,

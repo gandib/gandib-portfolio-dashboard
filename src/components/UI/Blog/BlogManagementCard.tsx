@@ -91,27 +91,28 @@ const BlogManageCard = ({
       description: instructionsWithoutImages,
     };
 
-    formData.append("data", JSON.stringify(blogData));
-
     if (cardTitle === "Add") {
+      formData.append("data", JSON.stringify(blogData));
       handleCreateBlog(formData);
     }
 
     if (cardTitle === "Update") {
       const updatedData = {
-        id: blog?._id,
-        data: {
-          title: title,
-          tag: tag,
-          description:
-            instructions.length > 0 ? instructionsWithoutImages : description,
-        },
+        title: title,
+        tag: tag,
+        description:
+          instructions.length > 0 ? instructionsWithoutImages : description,
       };
       setInstructions(
         instructions.length > 0 ? instructionsWithoutImages : description
       );
+      formData.append("data", JSON.stringify(updatedData));
 
-      handleUpdateBlog(updatedData);
+      const newUpdatedData = {
+        id: blog?._id,
+        data: formData,
+      };
+      handleUpdateBlog(newUpdatedData);
     }
   };
 

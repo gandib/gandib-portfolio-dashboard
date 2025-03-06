@@ -141,12 +141,12 @@ const CustomRichTextEditor = ({
         </button>
 
         {/* Image Insert Button */}
-        <button
+        <p
           className="px-2 py-1 border text-black rounded bg-gray-200 hover:bg-gray-300"
           onClick={() => fileInputRef.current?.click()}
         >
           Insert Image
-        </button>
+        </p>
         <input
           ref={fileInputRef}
           type="file"

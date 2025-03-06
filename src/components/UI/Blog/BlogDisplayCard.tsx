@@ -64,7 +64,11 @@ const BlogDisplayCard = ({
   const handleDelete = (id: string) => {
     deleteBlog(id);
   };
-
+  const parseHTML = (html: string) => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    const bodyText = doc.body.textContent || "";
+    return bodyText.slice(0, 145) + (bodyText.length > 145 ? "..." : "");
+  };
   return (
     <div>
       <div className="grid lg:grid-cols-2 gap-2 grow relative">
@@ -96,13 +100,12 @@ const BlogDisplayCard = ({
                     {data?.title}
                   </h4>
                 </div>
+
                 <div className="my-1 rounded  p-1 lg:text-lg font-medium flex ">
                   <div
                     className="instructions"
                     dangerouslySetInnerHTML={{
-                      __html:
-                        data.description.slice(0, 150) +
-                        `${data.description.length > 150 ? "..." : ""}`,
+                      __html: parseHTML(data.description),
                     }}
                   />
                 </div>
